@@ -1,14 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus } from 'react-icons/fi';
-import { Map, TileLayer } from 'react-leaflet';
+import { FiPlus, FiArrowRight } from 'react-icons/fi';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import Leaflet from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
 import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/pages/foyers-map.css';
-import { url } from 'inspector';
+
+const mapIcon = Leaflet.icon({
+	iconUrl: mapMarkerImg,
+	iconSize: [50, 60],
+	iconAnchor: [25, 60],
+	popupAnchor: [170, 2]
+
+})
+
 
 function FoyersMap() {
   return (
@@ -34,9 +43,23 @@ function FoyersMap() {
 				style={{ width: '100%', height: '100%'}}
 			>	
 				<TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+				<Marker 
+					icon={mapIcon}
+					position={[44.8584692,-0.5716759]}
+				>
+					<Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup">
+						Foyer Montemajam
+						<Link to="/foyers/1">
+							<FiArrowRight size={20} color="FFF" />
+						</Link>
+					</Popup>
+				</Marker>
+
+
 			</Map> 
 
-			<Link to="" className="create-foyer">
+			<Link to="/foyers/create" className="create-foyer">
 				<FiPlus size={32} color="#FFF" />
 			</Link>
 
