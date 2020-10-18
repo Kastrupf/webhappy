@@ -1,22 +1,13 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiInfo, FiArrowLeft } from "react-icons/fi";
+import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { useHistory } from 'react-router-dom';
-import L from 'leaflet';
-
-import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/pages/foyer.css';
 import Sidebar from "../components/Sidebar";
+import mapIcon from "../utils/mapIcon";
 
-const happyMapIcon = L.icon({
-  iconUrl: mapMarkerImg,
-
-  iconSize: [50, 60],
-  iconAnchor: [25, 60],
-  popupAnchor: [0, -52]
-})
 
 export default function Foyer() {
   const { goBack } = useHistory();
@@ -68,7 +59,7 @@ export default function Foyer() {
                                    
                 <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               
-                <Marker interactive={false} icon={happyMapIcon} position={[44.8584692,-0.5716759]} />
+                <Marker interactive={false} icon={mapIcon} position={[44.8584692,-0.5716759]} />
               </Map>
 
               <footer>
