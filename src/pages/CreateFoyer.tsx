@@ -1,23 +1,59 @@
-import React from "react";
+import React, { useState, FormEvent } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { useHistory } from "react-router-dom";
+import { LeafletMouseEvent } from 'leaflet';
 
 import { FiPlus } from "react-icons/fi";
 
-import '../styles/pages/create-foyer.css';
 import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
 
+import '../styles/pages/create-foyer.css';
 
-export default function CreateFoyer() {
-  const { goBack } = useHistory();
+
+export default function FoyerMap() {
+  // const { goBack } = useHistory();
+  
+  const [position, setPosition] = useState({latitude: 0, longitude: 0})
+
+  const [name, setName] = useState('');
+  const [about, setAbout] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [opening_hours, setOpeningHours] = useState('');
+  const [open_on_weekends, setOpenOnWeekends] = useState(true);
+     
+  function handleMapClick(event: LeafletMouseEvent) {
+
+    const { lat, lng } = event.latlng;
+    
+    setPosition({
+      latitude: lat,
+      longitude: lng,
+    });
+  }
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    const { latitude, longitude } = position;
+
+    console.log ({
+      position,
+      name,
+      about,
+      latitude,
+      longitude,
+      instructions,
+      opening_hours,
+      open_on_weekends
+    })
+  }
 
   return (
     <div id="page-create-foyer">
       <Sidebar />
      
       <main>
-        <form className="create-foyer-form">
+        <form onSubmit={handleSubmit} className="create-foyer-form">
           <fieldset>
             <legend>Données</legend>
 
@@ -25,20 +61,37 @@ export default function CreateFoyer() {
               center={[44.8584692,-0.5716759]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
+              onClick={handleMapClick}
             >
               <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              
-              <Marker interactive={false} icon={mapIcon} position={[44.8584692,-0.5716759]} />
+
+              { position.latitude !== 0 && (
+                <Marker 
+                  interactive={false} 
+                  icon={mapIcon} 
+                  position={[position.latitude,position.longitude
+                  ]} 
+                />
+              )}
             </Map>
 
             <div className="input-block">
               <label htmlFor="name">Nom</label>
-              <input id="name" />
+              <input 
+                id="name" 
+                value={name} 
+                onChange={event => setName(event.target.value)} 
+              />
             </div>
 
             <div className="input-block">
               <label htmlFor="about">A propos <span>Maximum de 300 caractères</span></label>
-              <textarea id="name" maxLength={300} />
+              <textarea 
+                id="about" 
+                maxLength={300} 
+                value={about} 
+                onChange={event => setAbout(event.target.value)} 
+            />
             </div>
 
             <div className="input-block">
@@ -48,7 +101,7 @@ export default function CreateFoyer() {
 
               </div>
 
-              <button className="new-image">
+              <button type="button" className="new-image">
                 <FiPlus size={24} color="#15b6d6" />
               </button>
             </div>
@@ -59,20 +112,42 @@ export default function CreateFoyer() {
 
             <div className="input-block">
               <label htmlFor="instructions">Instructions</label>
-              <textarea id="instructions" />
+              <textarea 
+                id="instructions" 
+                value={instructions} 
+                onChange={event => setInstructions(event.target.value)} 
+              />
             </div>
 
             <div className="input-block">
-              <label htmlFor="opening_hours">Nom</label>
-              <input id="opening_hours" />
+              <label htmlFor="opening_hours">Horaires d'overture au public</label>
+              <input 
+                id="opening_hours" 
+                value={opening_hours} 
+                onChange={event => setOpeningHours(event.target.value)} 
+              />
             </div>
 
             <div className="input-block">
               <label htmlFor="open_on_weekends">Ouvert les weekends</label>
 
               <div className="button-select">
-                <button type="button" className="active">Oui</button>
-                <button type="button">Non</button>
+                <button 
+                  type="button" 
+                  className={open_on_weekends ? 'active' : ''}
+                  onClick={() => setOpenOnWeekends(true)}
+                  >
+                    Oui
+                </button>
+
+                <button 
+                  type="button"
+                  className={!open_on_weekends ? 'active' : ''}
+                  onClick={() => setOpenOnWeekends(false)}
+                  >
+                    Non
+                </button>
+
               </div>
             </div>
           </fieldset>
