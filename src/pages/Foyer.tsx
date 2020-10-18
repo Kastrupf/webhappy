@@ -3,14 +3,52 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 
 import '../styles/pages/foyer.css';
 import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
+import { useState } from "react";
+import { useEffect } from "react";
+import api from "../services/api";
 
+interface Foyer {
+	latitude: number;
+	longitude: number;
+  name: string;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+}
+
+interface FoyerParams {
+	id: string;
+}
 
 export default function Foyer() {
-  const { goBack } = useHistory();
+  const params = useParams<FoyerParams>() ;
+  const [foyer, setFoyer] = useState<Foyer>();
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  
+	// console.log(foyers);
+
+	useEffect(() => {
+		api.get(`foyers/${params.id}`).then(response => {
+			// console.log(response.data);
+			setFoyer(response.data);
+		});
+  }, [params.id]);
+  
+  if (!foyer) {
+    return <p>Loading...</p>;
+  }
+
+  // const { goBack } = useHistory();
 
   return (
     <div id="page-foyer">
@@ -18,36 +56,32 @@ export default function Foyer() {
 
       <main>
         <div className="foyer-details">
-          <img src="" alt="Foyer Montmejam" />
+          <img src={foyer.images[activeImageIndex].url} alt={foyer.name} />
 
           <div className="images">
-            <button className="active" type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Foyer Montmejam" />
-            </button>
-            <button type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Foyer Montmejam" />
-            </button>
-            <button type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Foyer Montmejam" />
-            </button>
-            <button type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Foyer Montmejam" />
-            </button>
-            <button type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Foyer Montmejam" />
-            </button>
-            <button type="button">
-              <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
-            </button>
+            {foyer.images.map((image, index) => {
+              return (
+                <button 
+                  key= {image.id} 
+                  className={activeImageIndex === index ? 'active' : ''} 
+                  type="button"
+                  onClick={() =>{
+                    setActiveImageIndex(index);
+                  }}
+                >
+                  <img src={image.url} alt={foyer.name} />
+                </button>
+              );
+            })}
           </div>
           
           <div className="foyer-details-content">
-            <h1>Foyer Montmejam</h1>
-            <p>Maison d'enfants à caractère social (MECS)</p>
+            <h1>{foyer.name}</h1>
+            <p>{foyer.about}</p>
 
             <div className="map-container">
               <Map 
-                center={[44.8584692,-0.5716759]} 
+                center={[foyer.latitude,foyer.longitude]} 
                 zoom={15} 
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
@@ -59,31 +93,39 @@ export default function Foyer() {
                                    
                 <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               
-                <Marker interactive={false} icon={mapIcon} position={[44.8584692,-0.5716759]} />
+                <Marker interactive={false} icon={mapIcon} position={[foyer.latitude,foyer.longitude]} />
               </Map>
 
               <footer>
-                <a href="">Voir l'itineraire dans Google Maps</a>
+                <a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${foyer.latitude},${foyer.longitude}`}>Voir l'itineraire dans Google Maps</a>
               </footer>
             </div>
 
             <hr />
 
             <h2>Instruction de visite</h2>
-            <p>Venez comme vous vous sentez et apportez beaucoup d'amour à donner.</p>
+            <p>{foyer.instructions}</p>
 
             <div className="open-details">
               <div className="hour">
                 <FiClock size={32} color="#15B6D6" />
                 Lundi au vendredi <br />
-                8 à 18h
+                {foyer.opening_hours}
               </div>
-              <div className="open-on-weekends">
-                <FiInfo size={32} color="#39CC83" />
-                Nous sommes ouverts <br />
-                les weekends
+              { foyer.open_on_weekends ? (
+                  <div className="open-on-weekends">
+                    <FiInfo size={32} color="#39CC83" />
+                    Nous sommes ouverts <br />
+                    pendant les weekends
+                </div>
+              ) : (
+                  <div className="open-on-weekends not-open">
+                    <FiInfo size={32} color="#FF669D" />
+                    Nous sommes fermés <br />
+                    les weekends
+                  </div>
+              ) }
               </div>
-            </div>
 
             <button type="button" className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />

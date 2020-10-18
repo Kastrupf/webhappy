@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiArrowRight } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -7,9 +7,28 @@ import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/pages/foyers-map.css';
 import mapIcon from '../utils/mapIcon';
+import api from '../services/api';
+
+interface Foyer {
+	id: number;
+	latitude: number;
+	longitude: number;
+	name: string;
+}
 
 function FoyersMap() {
-  return (
+	const [foyers, setFoyers] = useState<Foyer[]>([]);
+
+	// console.log(foyers);
+
+	useEffect(() => {
+		api.get('foyers').then(response => {
+			// console.log(response.data);
+			setFoyers(response.data);
+		});
+	}, []);
+
+	return (
 		<div id="page-map">
 			<aside>
 				<header>
@@ -33,19 +52,22 @@ function FoyersMap() {
 			>	
 				<TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-				<Marker 
-					icon={mapIcon}
-					position={[44.8584692,-0.5716759]}
-				>
-					<Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup">
-						Foyer Montemajam
-						<Link to="/foyers/1">
-							<FiArrowRight size={20} color="FFF" />
-						</Link>
-					</Popup>
-				</Marker>
-
-
+				{foyers.map(foyer => {
+					return (
+						<Marker 
+							key={foyer.id}
+							icon={mapIcon}
+							position={[foyer.latitude,foyer.longitude]}
+						>
+						<Popup closeButton={false} minWidth={240} maxWidth={240} className="map-popup">
+							{foyer.name}
+							<Link to={`/foyers/${foyer.id}`}>
+								<FiArrowRight size={20} color="FFF" />
+							</Link>
+						</Popup>
+					</Marker>
+					)
+				})}
 			</Map> 
 
 			<Link to="/foyers/create" className="create-foyer">
