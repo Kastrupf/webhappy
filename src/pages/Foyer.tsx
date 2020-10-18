@@ -8,6 +8,7 @@ import L from 'leaflet';
 import mapMarkerImg from '../images/map-marker.svg';
 
 import '../styles/pages/foyer.css';
+import Sidebar from "../components/Sidebar";
 
 const happyMapIcon = L.icon({
   iconUrl: mapMarkerImg,
@@ -22,15 +23,7 @@ export default function Foyer() {
 
   return (
     <div id="page-foyer">
-      <aside>
-        <img src={mapMarkerImg} alt="Happy" />
-
-        <footer>
-          <button type="button" onClick={goBack}>
-            <FiArrowLeft size={24} color="#FFF" />
-          </button>
-        </footer>
-      </aside>
+      <Sidebar />
 
       <main>
         <div className="foyer-details">
