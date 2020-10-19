@@ -41,9 +41,9 @@ Ci-dessous, vous trouverez la mise en page du projet Web et mobile.
 - Layout Web
 <img alt="Carte" src=".github/happy_mapPage.PNG" width="100%"/>
 <br>
-<img alt="Création Foyer" src=".github/foyer_creationPage.PNG" width="25%"/>
+<img alt="Création Foyer" src=".github/foyer_creationPage.PNG" width="100%"/>
 <br>
-<img alt="Détail Foyer" src=".github/foyer_detailPage.PNG" width="25%"/>
+<img alt="Détail Foyer" src=".github/foyer_detailPage.PNG" width="100%"/>
 <br>
 
 - Layout Mobile
