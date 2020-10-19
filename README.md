@@ -39,6 +39,11 @@ Le Happy est une application qui lie les gens aux défavorisés pour rendre la j
 Ci-dessous, vous trouverez la mise en page du projet Web et mobile. 
 
 - Layout Web
+<img alt="Landing Page" src=".github/happy_landingPage.PNG" />
+<br>
+<img alt="Landing Page" src=".github/happy_mapPage.PNG" />
+<br>
+
 - Layout Mobile
 
 ---
