@@ -145,10 +145,10 @@ export default function FoyerMap() {
           </fieldset>
 
           <fieldset>
-            <legend>Visitation</legend>
+            <legend>Horaires et conditions de visite</legend>
 
             <div className="input-block">
-              <label htmlFor="instructions">Instructions</label>
+              <label htmlFor="instructions">Conditions de visite</label>
               <textarea 
                 id="instructions" 
                 value={instructions} 
