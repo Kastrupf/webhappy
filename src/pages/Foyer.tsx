@@ -2,7 +2,6 @@ import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 
 import '../styles/pages/foyer.css';
@@ -31,12 +30,11 @@ interface FoyerParams {
 }
 
 export default function Foyer() {
+  // console.log(foyers);
   const params = useParams<FoyerParams>() ;
   const [foyer, setFoyer] = useState<Foyer>();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   
-	// console.log(foyers);
-
 	useEffect(() => {
 		api.get(`foyers/${params.id}`).then(response => {
 			// console.log(response.data);
@@ -47,8 +45,6 @@ export default function Foyer() {
   if (!foyer) {
     return <p>Loading...</p>;
   }
-
-  // const { goBack } = useHistory();
 
   return (
     <div id="page-foyer">
@@ -89,8 +85,7 @@ export default function Foyer() {
                 zoomControl={false}
                 scrollWheelZoom={false}
                 doubleClickZoom={false}
-              >
-                                   
+              >                                   
                 <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               
                 <Marker interactive={false} icon={mapIcon} position={[foyer.latitude,foyer.longitude]} />
@@ -131,9 +126,11 @@ export default function Foyer() {
               <FaWhatsapp size={20} color="#FFF" />
               Prendre un rendez-vous
             </button>
+
           </div>
         </div>
       </main>
+
     </div>
   );
 }

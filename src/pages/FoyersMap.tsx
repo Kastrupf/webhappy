@@ -17,9 +17,9 @@ interface Foyer {
 }
 
 function FoyersMap() {
-	const [foyers, setFoyers] = useState<Foyer[]>([]);
-
 	// console.log(foyers);
+	const [foyers, setFoyers] = useState<Foyer[]>([]);
+	
 
 	useEffect(() => {
 		api.get('foyers').then(response => {
@@ -42,7 +42,6 @@ function FoyersMap() {
 					<strong>Bordeaux</strong>
 					<span>Gironde</span>
 				</footer>
-
 			</aside>
 
 			<Map
@@ -73,10 +72,8 @@ function FoyersMap() {
 			<Link to="/foyers/create" className="create-foyer">
 				<FiPlus size={32} color="#FFF" />
 			</Link>
-
 		</div>
-    
-  )
+    )
 }
 
 export default FoyersMap;
