@@ -1,7 +1,6 @@
-Heureux
-Technologies | Projet 
-
 happy
+
+Technologies | Projet 
 
 🚀 Technologies
 Ce projet a été développé avec les technologies suivantes:
