@@ -72,7 +72,7 @@ export default function FoyerMap() {
 
     await api.post('foyers', data);
 
-    alert('Inclusior effectué avec succès !');
+    alert('Votre enregistrement a été effectué avec succès !');
 
     history.push('/app');
   }
@@ -198,4 +198,4 @@ export default function FoyerMap() {
   );
 }
 
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;
+
