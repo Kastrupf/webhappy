@@ -98,13 +98,13 @@ export default function Foyer() {
 
             <hr />
 
-            <h2>Instruction de visite</h2>
+            <h2>Conditions de visite</h2>
             <p>{foyer.instructions}</p>
 
             <div className="open-details">
               <div className="hour">
                 <FiClock size={32} color="#15B6D6" />
-                Lundi au vendredi <br />
+                Du lundi au vendredi <br />
                 {foyer.opening_hours}
               </div>
               { foyer.open_on_weekends ? (

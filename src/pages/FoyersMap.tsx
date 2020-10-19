@@ -34,7 +34,7 @@ function FoyersMap() {
 				<header>
 					<img src={mapMarkerImg} alt="Happy" />
 
-					<h2>Choisissez un foyer dans le map</h2>
+					<h2>Choisissez un foyer dans la carte</h2>
 					<p>De nombreux enfants attendent votre visite :)</p>
 				</header>
 
