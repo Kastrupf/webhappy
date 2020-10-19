@@ -17,7 +17,7 @@
 <br>
 
 <p align="center">
-  <img alt="Happy" src=".github/happy.png" width="100%">
+  <img alt="Happy" src=".github/happy_landingPage.PNG" width="75%" />
 </p>
 
 ## 🚀 Technologies
@@ -39,12 +39,15 @@ Le Happy est une application qui lie les gens aux défavorisés pour rendre la j
 Ci-dessous, vous trouverez la mise en page du projet Web et mobile. 
 
 - Layout Web
-<img alt="Landing Page" src=".github/happy_landingPage.PNG" />
+<img alt="Carte" src=".github/happy_mapPage.PNG" width="75%"/>
 <br>
-<img alt="Landing Page" src=".github/happy_mapPage.PNG" />
+<img alt="Création Foyer" src=".github/foyer_creationPage.PNG" width="75%"/>
+<br>
+<img alt="Détail Foyer" src=".github/foyer_detailPage.PNG" width="75%"/>
 <br>
 
 - Layout Mobile
+en développment 
 
 ---
 
