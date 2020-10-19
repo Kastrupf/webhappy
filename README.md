@@ -1,14 +1,16 @@
-happy
+Projet : happy
+
 
 Technologies | Projet 
+
 
 🚀 Technologies
 Ce projet a été développé avec les technologies suivantes:
 
-Node.js
-React
-React Native
-Expo
+Node.js -
+React - 
+React Native -
+Expo - 
 Typescript
 
 
