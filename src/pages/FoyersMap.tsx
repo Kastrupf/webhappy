@@ -17,9 +17,9 @@ interface Foyer {
 }
 
 function FoyersMap() {
-	const [foyers, setFoyers] = useState<Foyer[]>([]);
-
 	// console.log(foyers);
+	const [foyers, setFoyers] = useState<Foyer[]>([]);
+	
 
 	useEffect(() => {
 		api.get('foyers').then(response => {
@@ -34,7 +34,7 @@ function FoyersMap() {
 				<header>
 					<img src={mapMarkerImg} alt="Happy" />
 
-					<h2>Choisissez un foyer dans le map</h2>
+					<h2>Choisissez un foyer dans la carte</h2>
 					<p>De nombreux enfants attendent votre visite :)</p>
 				</header>
 
@@ -42,7 +42,6 @@ function FoyersMap() {
 					<strong>Bordeaux</strong>
 					<span>Gironde</span>
 				</footer>
-
 			</aside>
 
 			<Map
@@ -73,10 +72,8 @@ function FoyersMap() {
 			<Link to="/foyers/create" className="create-foyer">
 				<FiPlus size={32} color="#FFF" />
 			</Link>
-
 		</div>
-    
-  )
+    )
 }
 
 export default FoyersMap;

@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
+import { useHistory } from "react-router-dom";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 
@@ -8,10 +9,12 @@ import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
 
 import '../styles/pages/create-foyer.css';
+import api from "../services/api";
 
 
 export default function FoyerMap() {
-  // const { goBack } = useHistory();
+  
+  const history = useHistory();
   
   const [position, setPosition] = useState({latitude: 0, longitude: 0})
 
@@ -49,21 +52,29 @@ export default function FoyerMap() {
     setPreviewImages(selectedIimagesPreview);
   };
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     const { latitude, longitude } = position;
 
-    console.log ({
-      position,
-      name,
-      about,
-      latitude,
-      longitude,
-      instructions,
-      opening_hours,
-      open_on_weekends
+    const data = new FormData();
+    data.append('name', name);
+    data.append('about', about);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+    data.append('instructions', instructions);
+    data.append('opening_hours', opening_hours);
+    data.append('open_on_weekends', String(open_on_weekends));
+
+    images.forEach(image => {
+      data.append('images', image);
     })
+
+    await api.post('foyers', data);
+
+    alert('Votre enregistrement a été effectué avec succès !');
+
+    history.push('/app');
   }
 
   return (
@@ -134,10 +145,10 @@ export default function FoyerMap() {
           </fieldset>
 
           <fieldset>
-            <legend>Visitation</legend>
+            <legend>Horaires et conditions de visite</legend>
 
             <div className="input-block">
-              <label htmlFor="instructions">Instructions</label>
+              <label htmlFor="instructions">Conditions de visite</label>
               <textarea 
                 id="instructions" 
                 value={instructions} 
@@ -187,4 +198,4 @@ export default function FoyerMap() {
   );
 }
 
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;
+
